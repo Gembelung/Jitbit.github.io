@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mengirim Pesan ke Telegram Bot</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <h1>Mengirim Pesan ke Telegram Bot</h1>
+  
+  <form id="messageForm">
+    <input type="text" id="messageInput" placeholder="Masukkan pesan...">
+    <button type="submit">Kirim Pesan</button>
+  </form>
+
+  <script>
+    const botToken = '6034719322:AAFCfS5qeO5hDSGhDfbiCeO4fVobCd19RkE';
+    const chatId = '-1001820491278';
+
+    const form = document.getElementById('messageForm');
+    const messageInput = document.getElementById('messageInput');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const message = messageInput.value;
+      sendMessage(message);
+      messageInput.value = '';
+    });
+
+    function sendMessage(message) {
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+      const params = {
+        chat_id: chatId,
+        text: message
+      };
+
+      axios.post(url, params)
+        .then(function (response) {
+          console.log('Pesan terkirim:', response.data);
+        })
+        .catch(function (error) {
+          console.error('Terjadi kesalahan:', error);
+        });
+    }
+  </script>
+</body>
+</html>
